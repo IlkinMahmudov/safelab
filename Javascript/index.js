@@ -96,6 +96,7 @@ const menuToggle = document.getElementById('menu-toggle');
   
   // Sol düymə
   leftButton.addEventListener('click', () => {
+    if (teamWrapper.scrollLeft <= 0) return; // artıq başdadır
     teamWrapper.scrollBy({
       left: -200,
       behavior: 'smooth',
@@ -104,9 +105,12 @@ const menuToggle = document.getElementById('menu-toggle');
   
   // Sağ düymə
   rightButton.addEventListener('click', () => {
+    const maxScrollLeft = teamWrapper.scrollWidth - teamWrapper.clientWidth;
+    if (teamWrapper.scrollLeft >= maxScrollLeft) return; // artıq sondadır
     teamWrapper.scrollBy({
       left: 200,
       behavior: 'smooth',
     });
   });
+  
   
