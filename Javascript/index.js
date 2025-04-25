@@ -82,30 +82,31 @@ const menuToggle = document.getElementById('menu-toggle');
   const rightButton = document.querySelector('.scroll-right-btn');
   const teamWrapper = document.querySelector('.team-wrapper');
   
-  let scrollInterval;
-  
-  // Scroll funksiyası
-  function startScrolling(direction) {
-    stopScrolling(); // Mövcud interval varsa təmizləyək
-    scrollInterval = setInterval(() => {
-      teamWrapper.scrollBy({
-        left: direction === 'left' ? -10 : 10,
-        behavior: 'smooth', // 'smooth' yox, çünki smooth gecikir
-      });
-    }, 10); // 10ms-də bir 10px sürüşdürür
+  function updateScrollButtons() {
+    const maxScrollLeft = teamWrapper.scrollWidth - teamWrapper.clientWidth;
+    leftButton.disabled = teamWrapper.scrollLeft <= 0;
+    rightButton.disabled = teamWrapper.scrollLeft >= maxScrollLeft;
   }
   
-  function stopScrolling() {
-    clearInterval(scrollInterval);
-  }
+  // İlk vəziyyəti yoxla
+  updateScrollButtons();
+  
+  // Scroll hadisəsində düymələrin vəziyyətini yenilə
+  teamWrapper.addEventListener('scroll', updateScrollButtons);
   
   // Sol düymə
-  leftButton.addEventListener('mousedown', () => startScrolling('left'));
-  leftButton.addEventListener('mouseup', stopScrolling);
-  leftButton.addEventListener('mouseleave', stopScrolling);
+  leftButton.addEventListener('click', () => {
+    teamWrapper.scrollBy({
+      left: -200,
+      behavior: 'smooth',
+    });
+  });
   
   // Sağ düymə
-  rightButton.addEventListener('mousedown', () => startScrolling('right'));
-  rightButton.addEventListener('mouseup', stopScrolling);
-  rightButton.addEventListener('mouseleave', stopScrolling);
+  rightButton.addEventListener('click', () => {
+    teamWrapper.scrollBy({
+      left: 200,
+      behavior: 'smooth',
+    });
+  });
   
