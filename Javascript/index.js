@@ -78,22 +78,34 @@ const menuToggle = document.getElementById('menu-toggle');
     }, 3000);
   }
   
-
   const leftButton = document.querySelector('.scroll-left-btn');
   const rightButton = document.querySelector('.scroll-right-btn');
   const teamWrapper = document.querySelector('.team-wrapper');
   
-  leftButton.addEventListener('click', () => {
-    teamWrapper.scrollBy({
-      left: -200,
-      behavior: 'smooth',
-    });
-  });
+  let scrollInterval;
   
-  rightButton.addEventListener('click', () => {
-    teamWrapper.scrollBy({
-      left: 200,
-      behavior: 'smooth',
-    });
-  });
+  // Scroll funksiyası
+  function startScrolling(direction) {
+    stopScrolling(); // Mövcud interval varsa təmizləyək
+    scrollInterval = setInterval(() => {
+      teamWrapper.scrollBy({
+        left: direction === 'left' ? -10 : 10,
+        behavior: 'smooth', // 'smooth' yox, çünki smooth gecikir
+      });
+    }, 10); // 10ms-də bir 10px sürüşdürür
+  }
+  
+  function stopScrolling() {
+    clearInterval(scrollInterval);
+  }
+  
+  // Sol düymə
+  leftButton.addEventListener('mousedown', () => startScrolling('left'));
+  leftButton.addEventListener('mouseup', stopScrolling);
+  leftButton.addEventListener('mouseleave', stopScrolling);
+  
+  // Sağ düymə
+  rightButton.addEventListener('mousedown', () => startScrolling('right'));
+  rightButton.addEventListener('mouseup', stopScrolling);
+  rightButton.addEventListener('mouseleave', stopScrolling);
   
