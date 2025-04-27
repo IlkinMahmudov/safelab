@@ -1301,15 +1301,15 @@ font-size: 48px;
 }
 
 @media screen and (max-width:1000px) {
-  .contact-img img{
-    display: none;
-  }
+
   .contact-us-section{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
   }
+  
 }
 
 
